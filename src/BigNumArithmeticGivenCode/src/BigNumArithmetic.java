@@ -47,20 +47,16 @@ public class BigNumArithmetic {
 
         return finalResult;
     }
-    public static int add(int num1, int num2) {
+    public static LinkedList add(LinkedList num1, LinkedList num2) {
         // Define a linked list to store the result.
         LinkedList result = new LinkedList();
-
+//
         // Define an int to store the carry.
         int carry = 0;
 
-        // Convert both integers in the array into linked lists using intToLinkedList method.
-        LinkedList num1List = intToLinkedList(num1);
-        LinkedList num2List = intToLinkedList(num2);
-
         // Iterators for the two linked lists.
-        Node num1Current = num1List.head;
-        Node num2Current = num2List.head;
+        Node num1Current = num1.head;
+        Node num2Current = num2.head;
 
         while (num1Current != null || num2Current != null || carry > 0) {
             int num1Digit = (num1Current != null) ? num1Current.data : 0;
@@ -82,46 +78,51 @@ public class BigNumArithmetic {
                 num2Current = num2Current.next;
             }
         }
-        return LinkedListToInt(result);
+        return result;
     }
-    public static int multiply(int num1,int num2) {
-        // Initialize an integer to store the result.
-        int result = 0;
-        //Define multiplier for long division
-        int multiplier = 1;
-        LinkedList tempResult =  new LinkedList();
 
-        // Convert both integers in the array into linked lists using intToLinkedList method.
-        LinkedList num1List = intToLinkedList(num1);
-        LinkedList num2List = intToLinkedList(num2);
+    public static LinkedList multiply(LinkedList num1, LinkedList num2) {
+        // Initialize a result linked list to store the product.
+        LinkedList result = new LinkedList();
+        LinkedList tempResult = new LinkedList();
 
-        // Iterator for the first linked list.
-        Node num1Current = num1List.head;
+        // Initialize a variable to keep track of the position of the digits.
+        int position = 0;
+
+        // Iterate through each digit in the first linked list.
+        Node num1Current = num1.head;
 
         while (num1Current != null) {
-            // Initialize an integer to store the carry.
-            int carry = 0;
+            int carry = 0; // Initialize carry for each position.
 
-            // Iterator for the second linked list.
-            Node num2Current = num2List.head;
+            // Append position number of zeros to tempResult.
+            for (int i = 0; i < position; i++) {
+                tempResult.append(0);
+            }
 
-            // Iterate through each element in the second linked list.
+            // Iterate through each digit in the second linked list.
+            Node num2Current = num2.head;
+
             while (num2Current != null) {
-
-                // Multiply the current digits and add the carry.
+                // Calculate the product and add the carry.
                 int product = (num1Current.data * num2Current.data) + carry;
-
-                tempResult.append(product);
-                // Update the carry for the next iteration.
-                carry = product / 10;
+                tempResult.append(product % 10); // Append the units digit to tempResult.
+                carry = product / 10; // Update the carry for the next iteration.
 
                 num2Current = num2Current.next;
             }
-            tempResult.append(carry);
-            // Add the carry (if any) to the result.
-            result  += LinkedListToInt(tempResult) * multiplier;
-            multiplier *= 10;
-            tempResult = new LinkedList();
+
+            // If there's any remaining carry, append it.
+            if (carry > 0) {
+                tempResult.append(carry);
+            }
+
+            // Add tempResult to the result.
+            result = add(result, tempResult);
+
+            // Increment the position for the next digit in num1.
+            position++;
+            tempResult = new LinkedList(); // Reset tempResult.
 
             num1Current = num1Current.next;
         }
@@ -129,8 +130,34 @@ public class BigNumArithmetic {
         return result;
     }
 
-    public static int exponentiate(int base, int power){
+    //    public static int exponentiate(int base, int power) {
+//        if (power < 0) {
+//            return exponentiate(1 / base, -power);
+//        } else if (power == 0) {
+//            return 1;
+//        } else if (power % 2 == 0) {
+//            int result = exponentiate(base, power / 2);
+//            return multiply(result, result);
+//        } else {
+//            int result = exponentiate(base, (power - 1) / 2);
+//            return base * multiply(result, result);
+//        }
+//    }
 
+    public static LinkedList exponentiate(LinkedList base, int power) {
+        LinkedList result = new LinkedList();
+        result.append(1); // Initialize result as 1.
+
+        while (power > 0) {
+            if (power % 2 == 1) {
+                // If power is odd, multiply result by base.
+                result = multiply(result, base);
+            }
+            base = multiply(base, base); // Square the base.
+            power /= 2; // Divide the power by 2.
+        }
+
+        return result;
     }
 
 

@@ -28,15 +28,27 @@ public class BigNumArithmeticTest {
 
     @Test
     public void testAdd() {
-        int result = BigNumArithmetic.add(1234, 5678);
-        // Assert that the addition result is as expected
-        assertEquals(6912, result);
+        LinkedList result = BigNumArithmetic.add(BigNumArithmetic.intToLinkedList(1111111111), BigNumArithmetic.intToLinkedList(222222222));
+        assertEquals(3, result.head.data);
+        assertEquals(3, result.head.next.data);
+        assertEquals(3, result.head.next.next.data);
     }
 
     @Test
     public void testMultiply() {
-        int result = BigNumArithmetic.multiply(12, 34);
+        LinkedList result = BigNumArithmetic.multiply(BigNumArithmetic.intToLinkedList(12),BigNumArithmetic.intToLinkedList( 34));
         // Assert that the multiplication result is as expected
-        assertEquals(408, result);
+        assertEquals(8, result.head.data);
+        assertEquals(0, result.head.next.data);
+        assertEquals(4, result.head.next.next.data);
+    }
+
+    @Test
+    public void testExponentiate() {
+        LinkedList result = BigNumArithmetic.exponentiate(BigNumArithmetic.intToLinkedList(2), 9);
+        // Assert that the result of 2^10 is as expected
+        assertEquals(2, result.head.data);
+        assertEquals(1, result.head.next.data);
+        assertEquals(5, result.head.next.next.data);
     }
 }
