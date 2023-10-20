@@ -167,41 +167,33 @@ public class BigNumArithmetic {
 
         if (expressions.length != 3) {
             System.err.println("Invalid expression: " + expression);
-//            return;
+            return "Invalid expression: " + expression;
         }
 
-        String operand1 = expressions[0];
+        LinkedList operand1 = intToLinkedList(Integer.parseInt(expressions[0]));
         String operator = expressions[1];
-        String operand2 = expressions[2];
+        LinkedList operand2 = intToLinkedList(Integer.parseInt(expressions[2]));
 
-        int num1 = Integer.parseInt(operand1);
-        int num2 = Integer.parseInt(operand2);
-
-        int result = 0;
+        LinkedList resultLinkedList = null;
 
         switch (operator) {
             case "+":
-                for (int i = 0; i < operand1.length(); i++) {
-//                    int numOne = operand1[i];
-//                    int numTwo = operand2[i];
-
-//                    result = numOne + numTwo;
-
-                }
+                resultLinkedList = add(operand1, operand2);
                 break;
             case "*":
-                result = num1 * num2;
+                resultLinkedList = multiply(operand1, operand2);
                 break;
             case "^":
-                result = (int) Math.pow(num1, num2);
+                resultLinkedList = exponentiate(operand1, Integer.parseInt(expressions[2]));
                 break;
             default:
                 System.err.println("Invalid operator: " + operator);
                 return "Invalid operator: " + operator;
         }
 
-        return operand1 + " " + operator + " " + operand2 + " = " + result;
+        int result = LinkedListToInt(resultLinkedList);
 
+        return expressions[0] + " " + operator + " " + expressions[2] + " = " + result;
     }
 }
 

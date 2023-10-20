@@ -15,44 +15,50 @@ public class FileProcessor {
         File infile = new File(filePath);
         try (Scanner scan = new Scanner(infile)) {
             while (scan.hasNext()) {
-                String line = scan.nextLine();
+                String line = scan.nextLine().trim();
 
-                // Process each line of the input file here.
-                // Initialize a StringBuilder to build the resulting string.
-                StringBuilder result = new StringBuilder();
+                if (line.isEmpty()) {
+                    continue;
+                }
 
-                for (int i = 0; i < line.length(); i++) {
-                    char currentChar = line.charAt(i);
-
-                    // Skip spaces and leading zeroes
-                    if (Character.isWhitespace(currentChar) || (currentChar == '0')) {
-                        continue;
-                    }
-
-                    // Check if it's a number
-                    if (Character.isDigit(currentChar)) {
-                        // Append digits to the result until you reach a non-digit character
-                        while (i < line.length() && Character.isDigit(line.charAt(i))) {
-                            result.append(line.charAt(i));
-                            i++;
-                        }
-                        // Move back by 1 to handle the non-digit character in the next iteration
-                        i--;
-                    } else if (currentChar == '+' || currentChar == '*' || currentChar == '^') {
-                        // If it's an operator (+, *, ^), append it to the result
-                        result.append(currentChar);
-                    } else {
-                        // If it's any other character, break
+                char operator = ' ';
+                for (char ch : new char[]{'+', '*', '^'}) {
+                    if (line.indexOf(ch) != -1) {
+                        operator = ch;
                         break;
                     }
                 }
 
-                // Print or use the 'result' string as needed.
-                System.out.println(result.toString());
+                String[] operands = line.split("\\" + operator);
+
+                LinkedList result;
+                switch (operator) {
+                    case '+':
+                        result = BigNumArithmetic.add(
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[0].trim())),
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[1].trim())));
+                        break;
+                    case '*':
+                        result = BigNumArithmetic.multiply(
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[0].trim())),
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[1].trim())));
+                        break;
+                    case '^':
+                        result = BigNumArithmetic.exponentiate(
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[0].trim())),
+                                Integer.parseInt(operands[1].trim()));
+                        break;
+                    default:
+                        System.out.println("Invalid operation in line: " + line);
+                        continue;
+                }
+
+                // Convert result to string and print
+                int resultInt = BigNumArithmetic.LinkedListToInt(result);
+                System.out.println(operands[0].trim() + " " + operator + " " + operands[1].trim() + " = " + resultInt);
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + infile.getPath());
         }
     }
-
 }
