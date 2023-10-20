@@ -7,48 +7,56 @@ public class BigNumArithmeticTest {
 
     @Test
     public void testIntToLinkedList() {
-        LinkedList linkedList = BigNumArithmetic.intToLinkedList(12345);
-        // Assert that the linked list contains the expected values
-        assertEquals(5, linkedList.head.data);
-        assertEquals(4, linkedList.head.next.data);
-        assertEquals(3, linkedList.head.next.next.data);
-        // Add more assertions as needed
+        LinkedList result = BigNumArithmetic.intToLinkedList(12345);
+        String strResult = BigNumArithmetic.linkedListToString(result);
+        assertEquals("12345", strResult);
     }
 
     @Test
     public void testLinkedListToInt() {
         LinkedList linkedList = new LinkedList();
-        linkedList.append(5);
-        linkedList.append(4);
+        linkedList.append(9);
+        linkedList.append(8);
+        linkedList.append(7);
+        int result = BigNumArithmetic.LinkedListToInt(linkedList);
+        assertEquals(789, result);
+    }
+
+    @Test
+    public void testLinkedListToString() {
+        LinkedList linkedList = new LinkedList();
+        linkedList.append(1);
+        linkedList.append(2);
         linkedList.append(3);
-        int num = BigNumArithmetic.LinkedListToInt(linkedList);
-        // Assert that the integer is as expected
-        assertEquals(345, num);
+        linkedList.append(4);
+        String result = BigNumArithmetic.linkedListToString(linkedList);
+        assertEquals("4321", result);
     }
 
     @Test
     public void testAdd() {
-        LinkedList result = BigNumArithmetic.add(BigNumArithmetic.intToLinkedList(1111111111), BigNumArithmetic.intToLinkedList(222222222));
-        assertEquals(3, result.head.data);
-        assertEquals(3, result.head.next.data);
-        assertEquals(3, result.head.next.next.data);
+        LinkedList num1 = BigNumArithmetic.intToLinkedList(12345);
+        LinkedList num2 = BigNumArithmetic.intToLinkedList(54321);
+        LinkedList result = BigNumArithmetic.add(num1, num2);
+        String strResult = BigNumArithmetic.linkedListToString(result);
+        assertEquals("66666", strResult);
     }
 
     @Test
     public void testMultiply() {
-        LinkedList result = BigNumArithmetic.multiply(BigNumArithmetic.intToLinkedList(12),BigNumArithmetic.intToLinkedList( 34));
-        // Assert that the multiplication result is as expected
-        assertEquals(8, result.head.data);
-        assertEquals(0, result.head.next.data);
-        assertEquals(4, result.head.next.next.data);
+        LinkedList num1 = BigNumArithmetic.intToLinkedList(12345);
+        LinkedList num2 = BigNumArithmetic.intToLinkedList(54321);
+        LinkedList result = BigNumArithmetic.multiply(num1, num2);
+        String strResult = BigNumArithmetic.linkedListToString(result);
+        assertEquals("670592745", strResult);
     }
 
     @Test
     public void testExponentiate() {
-        LinkedList result = BigNumArithmetic.exponentiate(BigNumArithmetic.intToLinkedList(2), 9);
-        // Assert that the result of 2^10 is as expected
-        assertEquals(2, result.head.data);
-        assertEquals(1, result.head.next.data);
-        assertEquals(5, result.head.next.next.data);
+        LinkedList base = BigNumArithmetic.intToLinkedList(2);
+        LinkedList result = BigNumArithmetic.exponentiate(base, 10);
+        String strResult = BigNumArithmetic.linkedListToString(result);
+        assertEquals("1024", strResult);
     }
 }
+

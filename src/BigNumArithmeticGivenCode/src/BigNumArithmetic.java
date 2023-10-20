@@ -158,41 +158,5 @@ public class BigNumArithmetic {
 
         return result;
     }
-
-
-
-    public String processLinkedListArithmetic(String expression) {
-        String[] expressions = expression.split("\\s+");
-
-        if (expressions.length != 3) {
-            System.err.println("Invalid expression: " + expression);
-            return "Invalid expression: " + expression;
-        }
-
-        LinkedList operand1 = intToLinkedList(Integer.parseInt(expressions[0]));
-        String operator = expressions[1];
-        LinkedList operand2 = intToLinkedList(Integer.parseInt(expressions[2]));
-
-        LinkedList resultLinkedList = null;
-
-        switch (operator) {
-            case "+":
-                resultLinkedList = add(operand1, operand2);
-                break;
-            case "*":
-                resultLinkedList = multiply(operand1, operand2);
-                break;
-            case "^":
-                resultLinkedList = exponentiate(operand1, Integer.parseInt(expressions[2]));
-                break;
-            default:
-                System.err.println("Invalid operator: " + operator);
-                return "Invalid operator: " + operator;
-        }
-
-        int result = LinkedListToInt(resultLinkedList);
-
-        return expressions[0] + " " + operator + " " + expressions[2] + " = " + result;
-    }
 }
 

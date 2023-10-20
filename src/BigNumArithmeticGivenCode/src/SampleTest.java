@@ -43,8 +43,8 @@ public class SampleTest {
     }
 
     @Test
-    public void testSampleFile() {
-        BigNumArithmetic.main(new String[] { "SampleInput.txt" });
+    public void testSampleFile1() {
+        BigNumArithmetic.main(new String[] { "src/BigNumArithmeticGivenCode/SampleInput.txt"});
         String output = this.baos.toString();
         assertEquals("1 + 2 = 3\n" +
                 "2 ^ 4 = 16\n" +

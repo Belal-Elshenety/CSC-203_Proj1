@@ -30,23 +30,25 @@ public class FileProcessor {
                 }
 
                 String[] operands = line.split("\\" + operator);
+                String operand1 = operands[0].trim().replaceFirst("^0+", "");
+                String operand2 = operands[1].trim().replaceFirst("^0+", "");
 
                 LinkedList result;
                 switch (operator) {
                     case '+':
                         result = BigNumArithmetic.add(
-                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[0].trim())),
-                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[1].trim())));
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operand1)),
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operand2)));
                         break;
                     case '*':
                         result = BigNumArithmetic.multiply(
-                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[0].trim())),
-                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[1].trim())));
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operand1)),
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operand2)));
                         break;
                     case '^':
                         result = BigNumArithmetic.exponentiate(
-                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operands[0].trim())),
-                                Integer.parseInt(operands[1].trim()));
+                                BigNumArithmetic.intToLinkedList(Integer.parseInt(operand1)),
+                                Integer.parseInt(operand2));
                         break;
                     default:
                         System.out.println("Invalid operation in line: " + line);
@@ -55,7 +57,12 @@ public class FileProcessor {
 
                 // Convert result to string and print
                 String resultInt = BigNumArithmetic.linkedListToString(result);
-                System.out.println(operands[0].trim() + " " + operator + " " + operands[1].trim() + " = " + resultInt);
+                String output = operand1 + " " + operator + " " + operand2 + " = " + resultInt;
+                if (scan.hasNext()){
+                    System.out.println(output);
+                } else {
+                    System.out.print(output);
+                }
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + infile.getPath());
