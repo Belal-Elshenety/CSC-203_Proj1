@@ -54,7 +54,7 @@ public class FileProcessor {
                 }
 
                 // Convert result to string and print
-                int resultInt = BigNumArithmetic.LinkedListToInt(result);
+                String resultInt = BigNumArithmetic.linkedListToString(result);
                 System.out.println(operands[0].trim() + " " + operator + " " + operands[1].trim() + " = " + resultInt);
             }
         } catch (FileNotFoundException e) {
