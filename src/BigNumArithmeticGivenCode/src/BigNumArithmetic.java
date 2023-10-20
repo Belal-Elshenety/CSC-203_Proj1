@@ -47,6 +47,19 @@ public class BigNumArithmetic {
 
         return finalResult;
     }
+    public static String linkedListToString(LinkedList linkedList) {
+        StringBuilder result = new StringBuilder();
+        Node current = linkedList.head;
+
+        while (current != null) {
+            result.insert(0, current.data); // Insert at the beginning to reverse the order
+            current = current.next;
+        }
+
+        return result.toString();
+    }
+
+
     public static LinkedList add(LinkedList num1, LinkedList num2) {
         // Define a linked list to store the result.
         LinkedList result = new LinkedList();
@@ -129,20 +142,6 @@ public class BigNumArithmetic {
 
         return result;
     }
-
-    //    public static int exponentiate(int base, int power) {
-//        if (power < 0) {
-//            return exponentiate(1 / base, -power);
-//        } else if (power == 0) {
-//            return 1;
-//        } else if (power % 2 == 0) {
-//            int result = exponentiate(base, power / 2);
-//            return multiply(result, result);
-//        } else {
-//            int result = exponentiate(base, (power - 1) / 2);
-//            return base * multiply(result, result);
-//        }
-//    }
 
     public static LinkedList exponentiate(LinkedList base, int power) {
         LinkedList result = new LinkedList();
